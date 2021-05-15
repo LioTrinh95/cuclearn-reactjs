@@ -18,7 +18,7 @@ const categoryApi = {
         return axiosClient.patch(url, data);
     },
     remove(id) {
-        const url = `/categories/${data.id}`;
+        const url = `/categories/${id}`;
         return axiosClient.delete(url);
     },
 };
