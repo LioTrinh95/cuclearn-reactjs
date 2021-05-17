@@ -38,7 +38,7 @@ function FilterByService({ filters = {}, onChange }) {
             <Typography>Dịch Vụ</Typography>
             <ul className={classes.list}>
                 {[{ value: 'isPromotion', label: 'Có Khuyến mãi' }, { value: 'isFreeShip', label: 'Vận chuyển miễn phí' }].map(service => (
-                    <li key={service}>
+                    <li key={service.value}>
                         <FormControlLabel
                             control={
                                 <Checkbox

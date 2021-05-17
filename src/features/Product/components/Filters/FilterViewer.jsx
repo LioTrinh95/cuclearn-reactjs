@@ -1,6 +1,7 @@
 import { Box, Chip, makeStyles } from '@material-ui/core';
+import categoryApi from 'api/categoryApi';
 import PropTypes from 'prop-types';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -17,6 +18,12 @@ const useStyles = makeStyles(theme => ({
         },
     },
 }))
+
+FilterViewer.propTypes = {
+    filters: PropTypes.object,
+    onChange: PropTypes.func,
+
+};
 
 const FILTER_LIST = [
     {
@@ -40,7 +47,7 @@ const FILTER_LIST = [
         id: 2,
         getLabel: () => 'Có khuyến mãi',
         isActive: () => true,
-        isVisible: (filters) => Object.keys(filters).includes('isPromotion'),
+        isVisible: (filters) => filters.isPromotion,
         isRemovable: true,
         onRemove: (filters) => {
             const newFilter = { ...filters };
@@ -64,23 +71,17 @@ const FILTER_LIST = [
         },
         onToggle: () => { },
     },
-    // {
-    //     id: 4,
-    //     getLabel: (filters) => 'Danh mục',
-    //     isActive: () => true,
-    //     isVisible: (filters) => true,
-    //     isRemovable: true,
-    //     onRemove: (filters) => { },
-    //     onToggle: (filters) => { },
-    // },
+    {
+        id: 4,
+        getLabel: (filters) => `Danh Mục`,
+        isActive: () => true,
+        isVisible: (filters) => Object.keys(filters).includes('category.id'),
+        isRemovable: true,
+        onRemove: (filters) => { },
+        onToggle: (filters) => { },
+    },
 
 ]
-
-FilterViewer.propTypes = {
-    filters: PropTypes.object,
-    onChange: PropTypes.func,
-
-};
 
 function FilterViewer({ filters = {}, onChange = null }) {
     const classes = useStyles();

@@ -8,13 +8,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { AccountCircle, Close } from '@material-ui/icons';
-import CodeIcon from '@material-ui/icons/Code';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import Login from 'features/Auth/components/Login';
 import { logout } from 'features/Auth/userSlice';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import Register from '../Auth/components/Register';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         flexGrow: 1,
+        paddingLeft: theme.spacing(1),
     },
     link: {
         color: '#fff',
@@ -84,15 +86,15 @@ export default function Header() {
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
-                    <CodeIcon className={classes.menuButton} />
+                    <FavoriteIcon color="error" />
                     <Typography variant="h6" className={classes.title}>
                         <Link className={classes.link} to='/'>LIO SHOP</Link>
                     </Typography>
-                    <NavLink to='/todos' className={classes.link}>
-                        <Button color='inherit'>Todos</Button>
+                    <NavLink to='/product' className={classes.link}>
+                        <Button color='inherit'>Product</Button>
                     </NavLink>
                     <NavLink to='/albums' className={classes.link}>
-                        <Button color='inherit'>Albums</Button>
+                        <Button color='inherit'>About</Button>
                     </NavLink>
 
                     {!isLoggedIn && (
