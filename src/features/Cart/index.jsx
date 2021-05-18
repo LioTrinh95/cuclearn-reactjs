@@ -1,12 +1,12 @@
 import { Box, Container, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { cartItemCountSelector, cartTotalSelector } from './selectors';
-import PropTypes from 'prop-types';
 import CartItemInfo from './CartItemInfo';
 import CartUserInfo from './CartUserInfo';
+import { cartItemCountSelector, cartTotalSelector } from './selectors';
 CartFeatures.propTypes = {
-    product: PropTypes.object,
+    cartItems: PropTypes.object,
 };
 
 CartFeatures.defaultProps = {
@@ -43,9 +43,13 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-function CartFeatures({ data }) {
+function CartFeatures(props) {
     const cartTotal = useSelector(cartTotalSelector);
     const cartCount = useSelector(cartItemCountSelector);
+    const data = useSelector(state => state.cart.cartItems);
+
+    console.log(data);
+
     const classes = useStyles();
     return (
         <Box className={classes.root}>
@@ -56,14 +60,17 @@ function CartFeatures({ data }) {
                 </Box>
                 <Paper elevation={0}>
                     <Grid container >
-                        {data.map((product) => (
-                            <Grid item className={classes.left} >
-                                <CartItemInfo product={product} />
-                            </Grid>
-                        ))}
+
+                        <Grid item className={classes.left} >
+                            {data.map((cartItems) => (
+                                <CartItemInfo cartItems={cartItems} />
+                            ))}
+                        </Grid>
+
                         <Grid item className={classes.right}>
                             <CartUserInfo />
                         </Grid>
+
                     </Grid>
                 </Paper>
             </Container>

@@ -1,4 +1,5 @@
 import { Box, Container, Grid, LinearProgress, makeStyles, Paper } from '@material-ui/core';
+import store from 'app/store';
 import { addToCart } from 'features/Cart/cartSlice';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -50,7 +51,6 @@ function DetailPage(props) {
     }
 
     const handleAddToCartSubmit = ({ quantity }) => {
-        console.log(product)
         const action = addToCart({
             id: product.id,
             product,
