@@ -8,7 +8,7 @@ CartItemInfo.propTypes = {
 function CartItemInfo(props) {
     return (
         <div>
-            Item Info
+            Cuc Item Info
         </div>
     );
 }
