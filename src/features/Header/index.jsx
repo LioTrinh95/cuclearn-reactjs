@@ -90,7 +90,7 @@ export default function Header() {
                     <Typography variant="h6" className={classes.title}>
                         <Link className={classes.link} to='/'>LIO SHOP</Link>
                     </Typography>
-                    <NavLink to='/product' className={classes.link}>
+                    <NavLink to='/products' className={classes.link}>
                         <Button color='inherit'>Product</Button>
                     </NavLink>
                     <NavLink to='/albums' className={classes.link}>

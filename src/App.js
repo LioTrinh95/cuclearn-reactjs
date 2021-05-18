@@ -1,3 +1,4 @@
+import CartFeatures from 'features/Cart';
 import ProductFeature from 'features/Product';
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
@@ -14,9 +15,9 @@ function App() {
 
       <Switch>
         <Redirect from="/home" to="/" exact></Redirect>
+        <Route path="/products" component={ProductFeature} />
+        <Route path="/cart" component={CartFeatures} />
 
-        {/* <Route path="/" component={ProductFeature} exact /> */}
-        <Route path="/product" component={ProductFeature} exact />
 
         <Route component={NotFound} />
       </Switch>

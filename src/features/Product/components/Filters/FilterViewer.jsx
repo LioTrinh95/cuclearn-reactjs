@@ -1,7 +1,6 @@
 import { Box, Chip, makeStyles } from '@material-ui/core';
-import categoryApi from 'api/categoryApi';
 import PropTypes from 'prop-types';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
 const useStyles = makeStyles(theme => ({
     root: {

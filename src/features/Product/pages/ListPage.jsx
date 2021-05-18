@@ -1,6 +1,7 @@
-import { Box, Container, fade, Grid, makeStyles, Paper } from '@material-ui/core';
+import { Box, Container, Grid, makeStyles, Paper } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import productApi from 'api/productApi';
+import queryString from 'query-string';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import FilterViewer from '../components/Filters/FilterViewer';
@@ -8,7 +9,6 @@ import ProductFilters from '../components/ProductFilters';
 import ProductList from '../components/ProductList';
 import ProductSkeletonList from '../components/ProductSkeletonList';
 import ProductSort from '../components/ProductSort';
-import queryString from 'query-string';
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -135,7 +135,6 @@ function ListPage(props) {
             search: queryString.stringify(newFilters)
         });
     };
-    console.log({ queryParams })
     return (
         <Box>
             <Container>
