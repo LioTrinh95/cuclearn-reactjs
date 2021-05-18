@@ -1,6 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Box, Link, makeStyles } from '@material-ui/core';
+import React from 'react';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 
 ProductMenu.propTypes = {
