@@ -2,7 +2,7 @@ import productApi from "api/productApi";
 import { useEffect, useState } from "react";
 
 export default function useProductDetail(productId) {
-    const [product, setProduct] = useState({});
+    const [product, setProduct] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {

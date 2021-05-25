@@ -1,6 +1,8 @@
 import { Box, Chip, makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import categoryApi from 'api/categoryApi';
+import { formatPrice } from 'utils';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -57,7 +59,7 @@ const FILTER_LIST = [
     },
     {
         id: 3,
-        getLabel: (filters) => `Từ ${filters.salePrice_gte} đến  ${filters.salePrice_lte}`,
+        getLabel: (filters) => `Từ ${formatPrice(filters.salePrice_gte)} đến  ${formatPrice(filters.salePrice_lte)}`,
         isActive: () => true,
         isVisible: (filters) => Object.keys(filters).includes('salePrice_lte')
             && Object.keys(filters).includes('salePrice_gte'),
@@ -72,11 +74,15 @@ const FILTER_LIST = [
     },
     {
         id: 4,
-        getLabel: (filters) => `Danh Mục`,
+        getLabel: (filters) => 'Danh mục',
         isActive: () => true,
         isVisible: (filters) => Object.keys(filters).includes('category.id'),
         isRemovable: true,
-        onRemove: (filters) => { },
+        onRemove: (filters) => {
+            const newFilter = { ...filters };
+            delete newFilter['category.id'];
+            return newFilter;
+        },
         onToggle: (filters) => { },
     },
 
@@ -84,6 +90,25 @@ const FILTER_LIST = [
 
 function FilterViewer({ filters = {}, onChange = null }) {
     const classes = useStyles();
+    const [categoryName, setCategoryName] = useState("");
+
+    const categoryId = filters['category.id'];
+    useEffect(() => {
+        (async () => {
+            try {
+                if (categoryId) {
+                    const list = await categoryApi.get(categoryId);
+                    setCategoryName(list.name);
+                }
+                else {
+                    setCategoryName('');
+                }
+            } catch (error) {
+                console.log('Failed to fetch catelogy name', error);
+            }
+        })();
+    }, [categoryId]);
+
     const visibleFilters = useMemo(() => {
         return FILTER_LIST.filter(x => x.isVisible(filters));
 
@@ -93,7 +118,7 @@ function FilterViewer({ filters = {}, onChange = null }) {
             {visibleFilters.map(x => (
                 <li key={x.id}>
                     <Chip
-                        label={x.getLabel(filters)}
+                        label={(x.id === 4 && categoryName) ? categoryName : x.getLabel(filters)}
                         color={x.isActive(filters) ? 'primary' : 'default'}
                         clickable={!x.isRemovable}
                         size="small"

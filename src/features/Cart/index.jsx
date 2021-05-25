@@ -1,28 +1,26 @@
 import { Box, Container, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import CartItemInfo from './CartItemInfo';
 import CartUserInfo from './CartUserInfo';
+import NoCart from './NoCart';
+import OrderProduct from './OrderProduct';
 import { cartItemCountSelector, cartTotalSelector } from './selectors';
-CartFeatures.propTypes = {
-    cartItems: PropTypes.object,
-};
 
 CartFeatures.defaultProps = {
     data: [],
 }
 const useStyles = makeStyles(theme => ({
-    root: { paddingBottom: theme.spacing(3) },
+    root: {},
     left: {
         width: '910px',
-        padding: theme.spacing(1.5),
-        borderRight: `1px solid ${theme.palette.grey[300]}`,
+        // padding: theme.spacing(1.5),
+        // borderRight: `1px solid ${theme.palette.grey[300]}`,
     },
 
     right: {
         flex: '1 1 0',
-        padding: theme.spacing(1.5),
+        padding: theme.spacing(2),
     },
     header: {
         display: 'flex',
@@ -41,40 +39,52 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
 
     },
+    orderProduct: {
+        marginTop: theme.spacing(1),
+    },
 }));
 
-function CartFeatures(props) {
+function CartFeatures() {
     const cartTotal = useSelector(cartTotalSelector);
     const cartCount = useSelector(cartItemCountSelector);
     const data = useSelector(state => state.cart.cartItems);
 
-    console.log(data);
-
     const classes = useStyles();
     return (
-        <Box className={classes.root}>
+        <Box>
             <Container >
                 <Box className={classes.header} >
                     <Typography component='h3' variant='h5'>GIỎ HÀNG</Typography>
                     <Typography className={classes.countItem}>({cartCount} sản phẩm)</Typography>
                 </Box>
-                <Paper elevation={0}>
-                    <Grid container >
 
-                        <Grid item className={classes.left} >
-                            {data.map((cartItems) => (
-                                <CartItemInfo cartItems={cartItems} />
-                            ))}
-                        </Grid>
+                <Grid container spacing={1} >
 
-                        <Grid item className={classes.right}>
-                            <CartUserInfo />
-                        </Grid>
-
+                    <Grid item className={classes.left} >
+                        <Paper elevation={0}>
+                            {data.length > 0 ?
+                                data.map((cartItems) => (
+                                    <CartItemInfo key={cartItems.id} cartItems={cartItems} />
+                                ))
+                                :
+                                <NoCart />
+                            }
+                        </Paper>
                     </Grid>
-                </Paper>
+
+                    <Grid item className={classes.right}>
+                        <Paper elevation={0}>
+                            <CartUserInfo />
+                        </Paper>
+                        <Paper elevation={0} className={classes.orderProduct}>
+                            <OrderProduct cartTotal={cartTotal} />
+                        </Paper>
+                    </Grid>
+
+                </Grid>
             </Container>
         </Box>
+
     );
 }
 

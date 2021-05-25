@@ -4,7 +4,7 @@ import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        padding: theme.spacing(1),
+        padding: theme.spacing(2),
         borderTop: `1px solid ${theme.palette.grey[300]}`
     },
     list: {
@@ -14,6 +14,11 @@ const useStyles = makeStyles((theme) => ({
         '& > li': {
             margin: 0,
             marginTop: theme.spacing(1),
+        }
+    },
+    checkbox: {
+        '& > span': {
+            fontSize: '0.875rem',
         }
     }
 }))
@@ -35,11 +40,11 @@ function FilterByService({ filters = {}, onChange }) {
     return (
 
         <Box className={classes.root}>
-            <Typography>Dịch Vụ</Typography>
+            <Typography variant="subtitle2">DỊCH VỤ</Typography>
             <ul className={classes.list}>
                 {[{ value: 'isPromotion', label: 'Có Khuyến mãi' }, { value: 'isFreeShip', label: 'Vận chuyển miễn phí' }].map(service => (
                     <li key={service.value}>
-                        <FormControlLabel
+                        <FormControlLabel className={classes.checkbox}
                             control={
                                 <Checkbox
                                     checked={Boolean(filters[service.value])}

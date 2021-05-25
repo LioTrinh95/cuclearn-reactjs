@@ -1,10 +1,11 @@
 import { Box, Button, makeStyles, TextField, Typography } from '@material-ui/core';
 import PropTypes from "prop-types";
 import React, { useState } from 'react';
+import NumberFormat from 'react-number-format';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        padding: theme.spacing(1),
+        padding: theme.spacing(2),
         borderTop: `1px solid ${theme.palette.grey[300]}`
     },
     range: {
@@ -32,6 +33,28 @@ FilterByPrice.propTypes = {
     onChange: PropTypes.func,
 
 };
+
+function NumberFormatCustom(props) {
+    const { inputRef, onChange, ...other } = props;
+
+    return (
+        <NumberFormat
+            {...other}
+            getInputRef={inputRef}
+            onValueChange={(values) => {
+                onChange({
+                    target: {
+                        name: props.name,
+                        value: values.value,
+                    },
+                });
+            }}
+            thousandSeparator
+            isNumericString
+        // prefix="$"
+        />
+    );
+}
 
 
 function FilterByPrice({ onChange }) {
@@ -61,11 +84,28 @@ function FilterByPrice({ onChange }) {
     return (
 
         <Box className={classes.root}>
-            <Typography>CHỌN KHOẢNG GIÁ</Typography>
+            <Typography variant='subtitle2'>CHỌN KHOẢNG GIÁ</Typography>
             <Box className={classes.range}>
-                <TextField name="salePrice_gte" value={values.salePrice_gte} onChange={handleChange} />
+                {/* <TextField name="salePrice_gte" value={values.salePrice_gte} onChange={handleChange} /> */}
+                <TextField
+                    value={values.salePrice_gte}
+                    onChange={handleChange}
+                    name="salePrice_gte"
+                    InputProps={{
+                        inputComponent: NumberFormatCustom,
+                    }}
+                />
+
                 <span>-</span>
-                <TextField name="salePrice_lte" value={values.salePrice_lte} onChange={handleChange} />
+
+                <TextField
+                    value={values.salePrice_lte}
+                    onChange={handleChange}
+                    name="salePrice_lte"
+                    InputProps={{
+                        inputComponent: NumberFormatCustom,
+                    }}
+                />
             </Box>
             <Box className={classes.button}>
                 <Button
