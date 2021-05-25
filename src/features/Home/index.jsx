@@ -1,4 +1,4 @@
-import { Box, Button, Container, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
+import { Box, Button, Container, Grid, makeStyles, Paper } from '@material-ui/core';
 import dataTest from 'api/dataTest';
 import productApi from 'api/productApi';
 import React, { useEffect, useMemo, useState } from 'react';
